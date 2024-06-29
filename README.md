@@ -38,3 +38,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 # CapInspire
 
 This is a repo for our caption generator app using ai
+
+We need to add documentation here.
