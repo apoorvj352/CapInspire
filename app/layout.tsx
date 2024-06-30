@@ -1,4 +1,5 @@
 import { NavBar } from "@/components/shared/NavBar/NavBar";
+import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
@@ -31,6 +32,7 @@ export default function RootLayout({
         className={`${inter.className} ${spaceGrotesk.className} flex justify-center flex-wrap`}
       >
         <NavBar />
+        <Toaster />
         {children}
       </body>
     </html>

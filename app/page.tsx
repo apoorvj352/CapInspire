@@ -1,3 +1,5 @@
+import { ExampleCaptions } from "@/components/ExampleCaptions";
+import CaptionCarousel from "@/components/carousel/captionCarousel";
 import { Button } from "@/components/ui/button";
 import { TypewriterEffectSmooth } from "@/components/ui/typing";
 import Image from "next/image";
@@ -30,7 +32,7 @@ const Home = () => {
     },
   ];
   return (
-    <div className="min-w-full bg-slate-200 min-h-screen flex flex-col gap-6 items-center p-8">
+    <div className="min-w-full white min-h-screen flex flex-col gap-6 items-center p-8">
       <Image
         src={"/assets/ImageCaption.png"}
         width={300}
@@ -41,11 +43,15 @@ const Home = () => {
         Captionize your thoughts in your local language
       </div> */}
       <TypewriterEffectSmooth words={words} className="text-3xl font-bold" />
-      <Button>Captize using AI</Button>
+      <Button size={"lg"} className="text-xl">
+        Captize using AI
+      </Button>
       <div className="flex flex-col items-center m-8">
         <div className="font-bold text-6xl">100K+</div>
         <div className="font-bold text-4xl">Happy Users</div>
       </div>
+      <CaptionCarousel />
+      <ExampleCaptions />
     </div>
   );
 };

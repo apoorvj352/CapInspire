@@ -4,7 +4,7 @@ import { MobileNavBar } from "./MobileNavBar";
 
 export const NavBar = () => {
   return (
-    <div className="w-full bg-opacity-40 bg-slate-500 h-16 flex items-center px-8 justify-between">
+    <div className="w-full bg-opacity-40 bg-zinc-200 h-16 flex items-center px-8 justify-between">
       <div className="flex gap-2 items-center">
         <Image
           src={"/assets/Designer.png"}
@@ -33,7 +33,7 @@ export const NavBar = () => {
         <div className="text-xl font-medium">Trending</div>
         <div className="text-xl font-medium">About Us</div> */}
       </div>
-      <MobileNavBar/>
+      <MobileNavBar />
     </div>
   );
 };
