@@ -9,17 +9,53 @@ import {
 } from "@/components/ui/carousel";
 import React from "react";
 import { CaptionCard } from "./captionCard";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import CaptionList from "./CaptionList";
 
-// const captions = [
-//   {
-//     captions,
-//   },
-// ];
+export const PopoverCaptions = ({
+  value,
+  selected,
+}: {
+  value: string;
+  selected: boolean;
+}) => {
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger>
+        <CaptionCard value={value} selected={selected} />
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle className="relative">
+            Trending Captions
+          </AlertDialogTitle>
+          <AlertDialogDescription>
+            <CaptionList />
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction>Copy</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+};
 
 export const CaptionCarousel = () => {
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
-
+  const list = ["Mountains", "Beach", "Friends", "Love", "Fashion"];
   React.useEffect(() => {
     if (!api) {
       return;
@@ -41,7 +77,7 @@ export const CaptionCarousel = () => {
       <CarouselContent className="-ml-6">
         {Array.from({ length: 5 }).map((_, index) => (
           <CarouselItem key={index} className="pl-6 md:basis-1/2 lg:basis-1/3">
-            <CaptionCard selected={current == index} />
+            <PopoverCaptions value={list[index]} selected={current == index} />
           </CarouselItem>
         ))}
       </CarouselContent>

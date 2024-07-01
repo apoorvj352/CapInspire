@@ -1,5 +1,5 @@
-import { ExampleCaptions } from "@/components/ExampleCaptions";
 import CaptionCarousel from "@/components/carousel/captionCarousel";
+import Footer from "@/components/shared/NavBar/Footer";
 import { Button } from "@/components/ui/button";
 import { TypewriterEffectSmooth } from "@/components/ui/typing";
 import Image from "next/image";
@@ -14,9 +14,6 @@ const Home = () => {
     },
     {
       text: "thoughts",
-    },
-    {
-      text: "in",
     },
     {
       text: "in",
@@ -39,9 +36,6 @@ const Home = () => {
         height={300}
         className="rounded-md"
       />
-      {/* <div className="text-3xl font-bold">
-        Captionize your thoughts in your local language
-      </div> */}
       <TypewriterEffectSmooth words={words} className="text-3xl font-bold" />
       <Button size={"lg"} className="text-xl">
         Captize using AI
@@ -51,7 +45,7 @@ const Home = () => {
         <div className="font-bold text-4xl">Happy Users</div>
       </div>
       <CaptionCarousel />
-      <ExampleCaptions />
+      <Footer />
     </div>
   );
 };
