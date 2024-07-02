@@ -1,23 +1,11 @@
 import { TABS } from "@/constants/tabs";
-import Image from "next/image";
+import { Logo } from "../SiteLogo/Logo";
 import { MobileNavBar } from "./MobileNavBar";
 
 export const NavBar = () => {
   return (
     <div className="w-full bg-opacity-40 bg-zinc-200 h-16 flex items-center px-8 justify-between">
-      <div className="flex gap-2 items-center">
-        <Image
-          src={"/assets/Designer.png"}
-          height={50}
-          width={50}
-          className="m-2"
-        />
-        <div className="text-xl italic">
-          <span>Cap</span>
-          <span className="font-bold">Inspire</span>
-        </div>
-      </div>
-
+      <Logo />
       <div className="flex items-center gap-8 max-[950px]:hidden">
         {TABS.map((tabinfo) => {
           const { icon, link, name } = tabinfo;
