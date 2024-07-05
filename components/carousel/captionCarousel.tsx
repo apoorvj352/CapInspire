@@ -29,6 +29,15 @@ export const PopoverCaptions = ({
   value: string;
   selected: boolean;
 }) => {
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
   return (
     <AlertDialog>
       <AlertDialogTrigger>
