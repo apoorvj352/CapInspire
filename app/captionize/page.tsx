@@ -6,15 +6,19 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
+  CommandList,
 } from "@/components/ui/command";
+import { Label } from "@/components/ui/label";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { cn } from "@/utils/cn";
 import { Check, ChevronsUpDown } from "lucide-react";
 import React from "react";
+import MicrophoneComponent from "./recorder";
 
 export const MoodCard = () => {
   return (
@@ -51,7 +55,7 @@ export const MoodCard = () => {
   );
 };
 
-const Languages = [
+const frameworks = [
   {
     value: "next.js",
     label: "Next.js",
@@ -88,41 +92,184 @@ export function ComboboxDemo() {
           className="w-[200px] justify-between"
         >
           {value
-            ? Languages.find((Language) => Language.value === value)?.label
-            : "Select Language..."}
+            ? frameworks.find((framework) => framework.value === value)?.label
+            : "Select framework..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
         <Command>
-          <CommandInput placeholder="Search Language..." />
-          <CommandEmpty>No Language found.</CommandEmpty>
-          <CommandGroup>
-            {Languages.map((Language) => (
-              <CommandItem
-                key={Language.value}
-                value={Language.value}
-                onSelect={(currentValue) => {
-                  setValue(currentValue === value ? "" : currentValue);
-                  setOpen(false);
-                }}
-              >
-                <Check
-                  className={cn(
-                    "mr-2 h-4 w-4",
-                    value === Language.value ? "opacity-100" : "opacity-0"
-                  )}
-                />
-                {Language.label}
-              </CommandItem>
-            ))}
-          </CommandGroup>
+          <CommandInput placeholder="Search framework..." />
+          <CommandList>
+            <CommandEmpty>No framework found.</CommandEmpty>
+            <CommandGroup>
+              {frameworks.map((framework) => (
+                <CommandItem
+                  key={framework.value}
+                  value={framework.value}
+                  onSelect={(currentValue) => {
+                    setValue(currentValue === value ? "" : currentValue);
+                    setOpen(false);
+                  }}
+                >
+                  <Check
+                    className={cn(
+                      "mr-2 h-4 w-4",
+                      value === framework.value ? "opacity-100" : "opacity-0"
+                    )}
+                  />
+                  {framework.label}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
         </Command>
       </PopoverContent>
     </Popover>
   );
 }
+// const Languages = [
+//   {
+//     value: "next.js",
+//     label: "Next.js",
+//   },
+//   {
+//     value: "sveltekit",
+//     label: "SvelteKit",
+//   },
+//   {
+//     value: "nuxt.js",
+//     label: "Nuxt.js",
+//   },
+//   {
+//     value: "remix",
+//     label: "Remix",
+//   },
+//   {
+//     value: "astro",
+//     label: "Astro",
+//   },
+// ];
 
+// export function ComboboxDemo() {
+//   const [open, setOpen] = React.useState(false);
+//   const [value, setValue] = React.useState("");
+
+//   return (
+//     <Popover open={open} onOpenChange={setOpen}>
+//       <PopoverTrigger asChild>
+//         <Button
+//           variant="outline"
+//           role="combobox"
+//           aria-expanded={open}
+//           className="w-[200px] justify-between"
+//         >
+//           {value
+//             ? Languages.find((Language) => Language.value === value)?.label
+//             : "Select Language..."}
+//           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+//         </Button>
+//       </PopoverTrigger>
+//       <PopoverContent className="w-[200px] p-0">
+//         <Command>
+//           <CommandInput placeholder="Search Language..." />
+//           <CommandEmpty>No Language found.</CommandEmpty>
+//           <CommandGroup>
+//             {Languages.map((Language) => (
+//               <CommandItem
+//                 key={Language.value}
+//                 value={Language.value}
+//                 onSelect={(currentValue) => {
+//                   setValue(currentValue === value ? "" : currentValue);
+//                   setOpen(false);
+//                 }}
+//               >
+//                 <Check
+//                   className={cn(
+//                     "mr-2 h-4 w-4",
+//                     value === Language.value ? "opacity-100" : "opacity-0"
+//                   )}
+//                 />
+//                 {Language.label}
+//               </CommandItem>
+//             ))}
+//           </CommandGroup>
+//         </Command>
+//       </PopoverContent>
+//     </Popover>
+//   );
+// }
+
+export const GeneratedCaptions = () => {
+  return (
+    <RadioGroup
+      id="generated-captions"
+      defaultValue="option-one"
+      className="p-4 mt-16 bg-slate-50 rounded-md max-h-80 border-2 border-black overflow-scroll"
+    >
+      <div className="flex items-center space-x-4 border-1 border-black rounded-md p-4">
+        <RadioGroupItem
+          value="option-one"
+          id="option-one"
+          className="flex-shrink-0"
+        />
+        <Label htmlFor="option-one">
+          Option One Option One Option OneOption One Option One Option One
+          Option One Option One Option One Option One Option One Option One
+          Option One Option One Option One Option One Option One Option One
+          Option OneOption One Option One Option One Option One Option One
+          Option One Option One Option One Option One Option One Option One
+          Option One Option One Option One Option One Option OneOption One
+          Option One Option One Option One Option One Option One Option One
+          Option One Option One Option One Option One Option One Option One
+          Option One Option One Option OneOption One Option One Option One
+          Option One Option One Option One Option One Option One Option One
+          Option One Option One Option One Option One
+        </Label>
+      </div>
+      <div className="flex items-center space-x-4 border-1 border-black rounded-md p-4">
+        <RadioGroupItem
+          value="option-two"
+          id="option-two"
+          className="flex-shrink-0"
+        />
+        <Label htmlFor="option-two">Option Two</Label>
+      </div>
+      <div className="flex items-center space-x-4 border-1 border-black rounded-md p-4">
+        <RadioGroupItem
+          value="option-three"
+          id="option-three"
+          className="flex-shrink-0"
+        />
+        <Label htmlFor="option-three">Option three</Label>
+      </div>
+      <div className="flex items-center space-x-4 border-1 border-black rounded-md p-4">
+        <RadioGroupItem
+          value="option-four"
+          id="option-four"
+          className="flex-shrink-0"
+        />
+        <Label htmlFor="option-four">Option four</Label>
+      </div>
+      <div className="flex items-center space-x-4 border-1 border-black rounded-md p-4">
+        <RadioGroupItem
+          value="option-five"
+          id="option-five"
+          className="flex-shrink-0"
+        />
+        <Label htmlFor="option-five">Option five</Label>
+      </div>
+      <div className="flex items-center space-x-4 border-1 border-black rounded-md p-4">
+        <RadioGroupItem
+          value="option-six"
+          id="option-six"
+          className="flex-shrink-0"
+        />
+        <Label htmlFor="option-six">Option six</Label>
+      </div>
+    </RadioGroup>
+  );
+};
 export const page = () => {
   return (
     <div className="p-10 min-w-full min-h-screen flex flex-col gap-2">
@@ -137,6 +284,8 @@ export const page = () => {
       </div>
       <h4 className="mb-3 mt-3">Select Language</h4>
       <ComboboxDemo />
+      <MicrophoneComponent />
+      <GeneratedCaptions />
     </div>
   );
 };

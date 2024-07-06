@@ -1,0 +1,141 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+// Import necessary modules and components
+import { useEffect, useRef, useState } from "react";
+
+// Declare a global interface to add the webkitSpeechRecognition property to the Window object
+declare global {
+  interface Window {
+    webkitSpeechRecognition: any;
+  }
+}
+
+// Export the MicrophoneComponent function component
+export default function MicrophoneComponent() {
+  // State variables to manage recording status, completion, and transcript
+  const [isRecording, setIsRecording] = useState(false);
+  const [recordingComplete, setRecordingComplete] = useState(false);
+  const [currentTranscript, setTranscript] = useState("");
+  const final_transcript = useRef("");
+  const [isSupported, setIsSupported] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const router = useRouter();
+
+  // Reference to store the SpeechRecognition instance
+  const recognitionRef = useRef<any>(null);
+
+  // Function to start recording
+  const startRecording = () => {
+    setIsRecording(true);
+    // Create a new SpeechRecognition instance and configure it
+    const speechRecognition =
+      window.webkitSpeechRecognition || window.SpeechRecognition;
+    if (speechRecognition) {
+      recognitionRef.current = new speechRecognition();
+      recognitionRef.current.continuous = true;
+      recognitionRef.current.interimResults = true;
+
+      // Event handler for speech recognition results
+      recognitionRef.current.onresult = (event: any) => {
+        let interimResults = "";
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          // Verify if the recognized text is the last with the isFinal property
+          if (event.results[i].isFinal) {
+            final_transcript.current += event.results[i][0].transcript;
+          } else {
+            interimResults += event.results[i][0].transcript;
+          }
+        }
+        // Log the recognition results and update the transcript state
+        setTranscript(final_transcript.current + interimResults);
+        if (textareaRef.current) {
+          textareaRef.current.scrollTop = textareaRef.current.scrollHeight;
+        }
+      };
+
+      // Start the speech recognition
+      recognitionRef.current.start();
+    }
+  };
+
+  // Cleanup effect when the component unmounts
+  useEffect(() => {
+    if (window.webkitSpeechRecognition || window.SpeechRecognition) {
+      setIsSupported(true);
+    }
+    return () => {
+      // Stop the speech recognition if it's active
+      if (recognitionRef.current) {
+        console.log("stopping...");
+        recognitionRef.current.stop();
+      }
+    };
+  }, []);
+
+  // Function to stop recording
+  const stopRecording = () => {
+    if (recognitionRef.current) {
+      // Stop the speech recognition and mark recording as complete
+      recognitionRef.current.stop();
+      setRecordingComplete(true);
+    }
+  };
+
+  // Toggle recording state and manage recording actions
+  const handleToggleRecording = () => {
+    setIsRecording(!isRecording);
+    if (!isRecording) {
+      startRecording();
+    } else {
+      stopRecording();
+    }
+  };
+  const handleValueChange = (e) => {
+    final_transcript.current = e.target.value;
+    setTranscript(e.target.value);
+  };
+  // Render the microphone component with appropriate UI based on recording state
+  return (
+    <div className="relative flex flex-col gap-5">
+      <Textarea
+        placeholder="Describe your thoughts...."
+        ref={textareaRef}
+        maxLength={250}
+        value={currentTranscript}
+        className="pr-20 resize-none"
+        onChange={handleValueChange}
+      />
+      {isSupported && (
+        <Button
+          variant={"outline"}
+          onClick={handleToggleRecording}
+          className="flex justify-center items-center border-2 rounded-full w-[50px] h-[50px] p-0 absolute right-5 top-4"
+        >
+          {
+            <Image
+              src={
+                isRecording
+                  ? "/assets/microphonestop.svg"
+                  : "/assets/microphone.svg"
+              }
+              height={20}
+              width={20}
+            />
+          }
+        </Button>
+      )}
+      <Button
+        className="w-full"
+        onClick={() => {
+          router.push("/captionize#generated-captions");
+        }}
+      >
+        Generate Captions
+      </Button>
+    </div>
+  );
+}
