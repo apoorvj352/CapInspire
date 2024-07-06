@@ -1,7 +1,13 @@
 // import { NavBar } from "@/components/shared/NavBar/NavBar";
 import { Toaster } from "@/components/ui/toaster";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Inter, Roboto, Space_Grotesk } from "next/font/google";
 import "./globals.css";
+
+const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["100", "300", "400", "500", "700", "900"],
+  variable: "--font-roboto",
+});
 
 const inter = Inter({
   subsets: ["latin"],
@@ -28,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} ${spaceGrotesk.className} flex justify-center flex-wrap`}
+        className={`${inter.className} ${spaceGrotesk.className} ${roboto.className} flex justify-center flex-wrap`}
       >
         <Toaster />
         {children}

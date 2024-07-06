@@ -1,34 +1,14 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
 import { Label } from "@/components/ui/label";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { cn } from "@/utils/cn";
-import { Check, ChevronsUpDown } from "lucide-react";
-import React from "react";
+import { Provider } from "react-redux";
+import Store from "./../../Store/store";
 import MicrophoneComponent from "./recorder";
 
 export const MoodCard = () => {
   return (
-    // <div>
-    //   <Card className="w-[100px] box-border">
-    //     <CardContent className="w-[100px] p-0">
-    //       <Image src={"/assets/Designer.png"} width={100} height={80}/>
-    //     </CardContent>
-    //   </Card>
-    // </div>
     <div className="max-w-xs w-[200px]">
       <div
         className={cn(
@@ -45,167 +25,44 @@ export const MoodCard = () => {
           <h1 className="font-bold text-xl md:text-3xl text-gray-50 relative text-center">
             Happy
           </h1>
-          {/* <p className="font-normal text-base text-gray-50 relative my-4">
-            This card is for some special elements, like displaying background
-            gifs on hover only.
-          </p> */}
         </div>
       </div>
     </div>
   );
 };
 
-const frameworks = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-];
-
-export function ComboboxDemo() {
-  const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
-
+export const MoodButton = () => {
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className="w-[200px] justify-between"
-        >
-          {value
-            ? frameworks.find((framework) => framework.value === value)?.label
-            : "Select framework..."}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
-        <Command>
-          <CommandInput placeholder="Search framework..." />
-          <CommandList>
-            <CommandEmpty>No framework found.</CommandEmpty>
-            <CommandGroup>
-              {frameworks.map((framework) => (
-                <CommandItem
-                  key={framework.value}
-                  value={framework.value}
-                  onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue);
-                    setOpen(false);
-                  }}
-                >
-                  <Check
-                    className={cn(
-                      "mr-2 h-4 w-4",
-                      value === framework.value ? "opacity-100" : "opacity-0"
-                    )}
-                  />
-                  {framework.label}
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
+    <Button
+      variant={"outline"}
+      className="rounded-3xl bg-white text-black font-sans gap-5"
+    >
+      Your MOOD &#128578;
+      <a
+        href="#" // InstaGram
+        className="[&>svg]:fill-[#c13584] hover:text-gray-500"
+      >
+        <span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="w-6 h-6"
+          >
+            <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm4.5 11.5h-1c-.28 0-.5-.22-.5-.5s.22-.5.5-.5h1c.28 0 .5.22.5.5s-.22.5-.5.5zM16 11a2 2 0 11-4 0h-2a2 2 0 11-4 0 2 2 0 013.5-1.44A4.98 4.98 0 0112 8c1.57 0 3 .75 3.5 1.94A2 2 0 0116 11zM9 13.5H7.5c-.28 0-.5-.22-.5-.5s.22-.5.5-.5H9c.28 0 .5.22.5.5s-.22.5-.5.5zM12 18c-1.65 0-3-1.35-3-3h6c0 1.65-1.35 3-3 3z" />
+          </svg>
+        </span>
+      </a>
+    </Button>
   );
-}
-// const Languages = [
-//   {
-//     value: "next.js",
-//     label: "Next.js",
-//   },
-//   {
-//     value: "sveltekit",
-//     label: "SvelteKit",
-//   },
-//   {
-//     value: "nuxt.js",
-//     label: "Nuxt.js",
-//   },
-//   {
-//     value: "remix",
-//     label: "Remix",
-//   },
-//   {
-//     value: "astro",
-//     label: "Astro",
-//   },
-// ];
-
-// export function ComboboxDemo() {
-//   const [open, setOpen] = React.useState(false);
-//   const [value, setValue] = React.useState("");
-
-//   return (
-//     <Popover open={open} onOpenChange={setOpen}>
-//       <PopoverTrigger asChild>
-//         <Button
-//           variant="outline"
-//           role="combobox"
-//           aria-expanded={open}
-//           className="w-[200px] justify-between"
-//         >
-//           {value
-//             ? Languages.find((Language) => Language.value === value)?.label
-//             : "Select Language..."}
-//           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-//         </Button>
-//       </PopoverTrigger>
-//       <PopoverContent className="w-[200px] p-0">
-//         <Command>
-//           <CommandInput placeholder="Search Language..." />
-//           <CommandEmpty>No Language found.</CommandEmpty>
-//           <CommandGroup>
-//             {Languages.map((Language) => (
-//               <CommandItem
-//                 key={Language.value}
-//                 value={Language.value}
-//                 onSelect={(currentValue) => {
-//                   setValue(currentValue === value ? "" : currentValue);
-//                   setOpen(false);
-//                 }}
-//               >
-//                 <Check
-//                   className={cn(
-//                     "mr-2 h-4 w-4",
-//                     value === Language.value ? "opacity-100" : "opacity-0"
-//                   )}
-//                 />
-//                 {Language.label}
-//               </CommandItem>
-//             ))}
-//           </CommandGroup>
-//         </Command>
-//       </PopoverContent>
-//     </Popover>
-//   );
-// }
+};
 
 export const GeneratedCaptions = () => {
   return (
     <RadioGroup
       id="generated-captions"
       defaultValue="option-one"
-      className="p-4 mt-16 bg-slate-50 rounded-md max-h-80 border-2 border-black overflow-scroll"
+      className="p-4 bg-slate-50 rounded-md max-h-80 border-2 border-black overflow-scroll"
     >
       <div className="flex items-center space-x-4 border-1 border-black rounded-md p-4">
         <RadioGroupItem
@@ -272,21 +129,15 @@ export const GeneratedCaptions = () => {
 };
 export const page = () => {
   return (
-    <div className="p-10 min-w-full min-h-screen flex flex-col gap-2">
-      <h2 className="text-3xl font-bold">Describe your thoughts...</h2>
-      <h4 className="mb-3 mt-3">Select Mood</h4>
-      <div className="flex flex-wrap gap-6">
-        <MoodCard />
-        <MoodCard />
-        <MoodCard />
-        <MoodCard />
-        <MoodCard />
+    <Provider store={Store}>
+      <div className="p-10 w-1/2 max-[1200px]:w-full min-h-screen flex flex-col gap-4 items-left">
+        <h2 className="text-2xl mb-10 mt-3 font-sans font-bold item-left">
+          Describe your thoughts...
+        </h2>
+        <MicrophoneComponent />
+        <GeneratedCaptions />
       </div>
-      <h4 className="mb-3 mt-3">Select Language</h4>
-      <ComboboxDemo />
-      <MicrophoneComponent />
-      <GeneratedCaptions />
-    </div>
+    </Provider>
   );
 };
 

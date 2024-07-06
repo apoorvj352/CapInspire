@@ -1,15 +1,5 @@
 "use client";
 import {
-  Carousel,
-  CarouselApi,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import React from "react";
-import { CaptionCard } from "./captionCard";
-import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -20,7 +10,17 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  Carousel,
+  CarouselApi,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import React from "react";
 import CaptionList from "./CaptionList";
+import { CaptionCard } from "./captionCard";
 
 export const PopoverCaptions = ({
   value,
@@ -29,6 +29,15 @@ export const PopoverCaptions = ({
   value: string;
   selected: boolean;
 }) => {
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
   return (
     <AlertDialog>
       <AlertDialogTrigger>
@@ -69,14 +78,14 @@ export const CaptionCarousel = () => {
   return (
     <Carousel
       setApi={setApi}
-      className="w-[90%] flex gap-10 py-6"
+      className="w-full flex py-6"
       opts={{
         loop: true,
       }}
     >
-      <CarouselContent className="-ml-6">
+      <CarouselContent className="flex">
         {Array.from({ length: 5 }).map((_, index) => (
-          <CarouselItem key={index} className="pl-6 md:basis-1/2 lg:basis-1/3">
+          <CarouselItem key={index} className=" flex justify-center">
             <PopoverCaptions value={list[index]} selected={current == index} />
           </CarouselItem>
         ))}

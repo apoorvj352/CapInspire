@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { ToastButton } from "../ToastButton";
 import { CardBody, CardContainer, CardItem } from "../ui/3d-card";
-import { useState } from "react";
 
 export function CaptionCard({
   value,
@@ -39,8 +39,8 @@ export function CaptionCard({
           <CardItem translateZ="100" className="w-full mt-4">
             <Image
               src="/assets/img1.jpg"
-              height="600"
-              width="600"
+              height="900"
+              width="900"
               className="h-60 w-full object-cover rounded-xl group-hover/card:shadow-xl"
               alt="thumbnail"
             />

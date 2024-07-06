@@ -6,6 +6,8 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 // Import necessary modules and components
 import { useEffect, useRef, useState } from "react";
+import Language from "./Language";
+import { MoodList } from "./MoodList";
 
 // Declare a global interface to add the webkitSpeechRecognition property to the Window object
 declare global {
@@ -128,6 +130,10 @@ export default function MicrophoneComponent() {
           }
         </Button>
       )}
+      <div className="flex flex-wrap gap-6 items-center">
+        <MoodList />
+        <Language />
+      </div>
       <Button
         className="w-full"
         onClick={() => {
