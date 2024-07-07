@@ -78,14 +78,17 @@ export const CaptionCarousel = () => {
   return (
     <Carousel
       setApi={setApi}
-      className="w-full flex py-6"
+      className="w-[80%] flex py-6 box-border"
       opts={{
         loop: true,
       }}
     >
       <CarouselContent className="flex">
         {Array.from({ length: 5 }).map((_, index) => (
-          <CarouselItem key={index} className=" flex justify-center">
+          <CarouselItem
+            key={index}
+            className="md:basis-1/2 lg:basis-1/3 flex justify-center p-0"
+          >
             <PopoverCaptions value={list[index]} selected={current == index} />
           </CarouselItem>
         ))}

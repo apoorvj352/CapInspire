@@ -43,7 +43,7 @@ export const Metric = ({
 };
 export const MetricSection = () => {
   return (
-    <div className="flex w-full justify-between px-20 max-md:flex-col max-md:items-center">
+    <div className="flex w-full justify-between max-md:flex-col max-md:items-center">
       {metrics.map((metric) => {
         return <Metric key={metric.label} {...metric} />;
       })}
@@ -76,7 +76,7 @@ const Home = () => {
     },
   ];
   return (
-    <div className="max-w-[1600px] max-lg:min-w-full white min-h-screen flex flex-col gap-6 items-center p-8 max-md:p-2 px-20">
+    <div className="2xl:max-w-[1534px] max-2xl:min-w-full white min-h-screen flex flex-col gap-6 items-center p-8 px-20 max-md:p-2 max-lg:px-2">
       <div className="w-full pb-20 flex justify-between items-center px-20 max-md:flex-wrap max-md:px-10 max-md:justify-center max-md:pb-0">
         <div className="flex flex-col justify-center gap-10 max-md:gap-4 w-[50%] max-md:w-full">
           <div
