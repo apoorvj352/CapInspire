@@ -5,7 +5,10 @@ import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 // Import necessary modules and components
+import { setGeneratedCaptions } from "@/Store/actionSelectPreference";
+import { fetchCaptions } from "@/utils/captionGenerator";
 import { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import Language from "./Language";
 import { MoodList } from "./MoodList";
 
@@ -26,6 +29,7 @@ export default function MicrophoneComponent() {
   const [isSupported, setIsSupported] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const router = useRouter();
+  const dispatch = useDispatch();
 
   // Reference to store the SpeechRecognition instance
   const recognitionRef = useRef<any>(null);
@@ -137,7 +141,16 @@ export default function MicrophoneComponent() {
       <Button
         className="w-full"
         onClick={() => {
-          router.push("/captionize#generated-captions");
+          fetchCaptions(
+            "I went to beach with my friends",
+            "refreshing",
+            "english"
+          ).then((data) => {
+            const jsonResult = JSON.parse(data.content);
+            dispatch(setGeneratedCaptions(jsonResult.captions));
+            router.push("/captionize#generated-captions");
+            console.log(jsonResult);
+          });
         }}
       >
         Generate Captions

@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { cn } from "@/utils/cn";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import Store from "./../../Store/store";
 import MicrophoneComponent from "./recorder";
 
@@ -57,76 +57,43 @@ export const MoodButton = () => {
   );
 };
 
-export const GeneratedCaptions = () => {
+export const GeneratedCaption = ({
+  label,
+  index,
+}: {
+  label: string;
+  index: number;
+}) => {
   return (
+    <div className="flex items-center space-x-4 border-1 border-black rounded-md p-4">
+      <RadioGroupItem
+        value={"option-" + index}
+        id={"option-" + index}
+        className="flex-shrink-0"
+      />
+      <Label htmlFor={"option-" + index}>{label}</Label>
+    </div>
+  );
+};
+export const GeneratedCaptions = () => {
+  const captions = useSelector((state) => state.generatedCaptions);
+  return captions.length !== 0 ? (
     <RadioGroup
       id="generated-captions"
       defaultValue="option-one"
       className="p-4 bg-slate-50 rounded-md max-h-80 border-2 border-black overflow-scroll"
     >
-      <div className="flex items-center space-x-4 border-1 border-black rounded-md p-4">
-        <RadioGroupItem
-          value="option-one"
-          id="option-one"
-          className="flex-shrink-0"
-        />
-        <Label htmlFor="option-one">
-          Option One Option One Option OneOption One Option One Option One
-          Option One Option One Option One Option One Option One Option One
-          Option One Option One Option One Option One Option One Option One
-          Option OneOption One Option One Option One Option One Option One
-          Option One Option One Option One Option One Option One Option One
-          Option One Option One Option One Option One Option OneOption One
-          Option One Option One Option One Option One Option One Option One
-          Option One Option One Option One Option One Option One Option One
-          Option One Option One Option OneOption One Option One Option One
-          Option One Option One Option One Option One Option One Option One
-          Option One Option One Option One Option One
-        </Label>
-      </div>
-      <div className="flex items-center space-x-4 border-1 border-black rounded-md p-4">
-        <RadioGroupItem
-          value="option-two"
-          id="option-two"
-          className="flex-shrink-0"
-        />
-        <Label htmlFor="option-two">Option Two</Label>
-      </div>
-      <div className="flex items-center space-x-4 border-1 border-black rounded-md p-4">
-        <RadioGroupItem
-          value="option-three"
-          id="option-three"
-          className="flex-shrink-0"
-        />
-        <Label htmlFor="option-three">Option three</Label>
-      </div>
-      <div className="flex items-center space-x-4 border-1 border-black rounded-md p-4">
-        <RadioGroupItem
-          value="option-four"
-          id="option-four"
-          className="flex-shrink-0"
-        />
-        <Label htmlFor="option-four">Option four</Label>
-      </div>
-      <div className="flex items-center space-x-4 border-1 border-black rounded-md p-4">
-        <RadioGroupItem
-          value="option-five"
-          id="option-five"
-          className="flex-shrink-0"
-        />
-        <Label htmlFor="option-five">Option five</Label>
-      </div>
-      <div className="flex items-center space-x-4 border-1 border-black rounded-md p-4">
-        <RadioGroupItem
-          value="option-six"
-          id="option-six"
-          className="flex-shrink-0"
-        />
-        <Label htmlFor="option-six">Option six</Label>
-      </div>
+      {captions.map((data, index) => {
+        return (
+          <GeneratedCaption index={index} label={data.caption} key={index} />
+        );
+      })}
     </RadioGroup>
+  ) : (
+    <></>
   );
 };
+
 export const page = () => {
   return (
     <Provider store={Store}>
