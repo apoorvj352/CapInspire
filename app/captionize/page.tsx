@@ -6,7 +6,18 @@ import { cn } from "@/utils/cn";
 import { Provider, useSelector } from "react-redux";
 import Store from "./../../Store/store";
 import MicrophoneComponent from "./recorder";
-
+import { TextDecorater } from "@/utils/TextDecorator";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 export const MoodCard = () => {
   return (
     <div className="max-w-xs w-[200px]">
@@ -56,6 +67,92 @@ export const MoodButton = () => {
     </Button>
   );
 };
+const copyToClipboard = (text: string) => {
+  navigator.clipboard
+    .writeText(text)
+    .then(() => {
+      alert("Copied to clipboard!");
+    })
+    .catch((err) => {
+      console.error("Failed to copy: ", err);
+    });
+};
+export const StylesCaptionList = ({ text }: { text: string }) => {
+  const captions = [
+    TextDecorater(text)[0],
+    TextDecorater(text)[1],
+    TextDecorater(text)[2],
+    TextDecorater(text)[3],
+    TextDecorater(text)[4],
+    TextDecorater(text)[5],
+  ];
+  return (
+    <div className="flex flex-col">
+      {captions.map((caption, index) => (
+        <div key={index} className="flex items-center justify-between p-4 mb-2">
+          <div className="text-lg text-black flex-1 pr-4">{caption}</div>
+          <button
+            className="p-2 mt-2 sm:mt-0 sm:ml-4 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700"
+            onClick={() => copyToClipboard(caption)}
+          >
+            <svg
+              className="w-5 h-5 text-gray-900 dark:text-gray-300"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <rect x="9" y="9" width="13" height="13" rx="5" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+          </button>
+          <button className="bg-neutral-500 text-white py-1 px-2 ml-5 rounded hover:bg-neutral-700">
+            Preview
+          </button>
+        </div>
+      ))}
+    </div>
+  );
+};
+export const MoreStylesSection = ({ text }: { text: string }) => {
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger>
+        <Button>View in More Styles</Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent className="min-w-[40%] md:w-full">
+        <AlertDialogHeader className="flex justify-between items-center min-w-[40%]">
+          <AlertDialogTitle className="relative w-full flex justify-between items-center text-3xl font-sans">
+            <span>Pick your style</span>
+            <AlertDialogCancel asChild className="border-none">
+              <button className="p-2">
+                <svg
+                  className="w-5 h-5 text-black dark:text-gray-300"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </button>
+            </AlertDialogCancel>
+          </AlertDialogTitle>
+        </AlertDialogHeader>
+        <AlertDialogDescription className="w-full">
+          <StylesCaptionList text={text} />
+        </AlertDialogDescription>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+};
 
 export const GeneratedCaption = ({
   label,
@@ -65,30 +162,28 @@ export const GeneratedCaption = ({
   index: number;
 }) => {
   return (
-    <div className="flex items-center space-x-4 border-1 border-black rounded-md p-4">
-      <RadioGroupItem
-        value={"option-" + index}
-        id={"option-" + index}
-        className="flex-shrink-0"
-      />
-      <Label htmlFor={"option-" + index}>{label}</Label>
-    </div>
+    <li className="flex items-center justify-between space-x-4 rounded-md p-4">
+      <span>{label}</span>
+      <MoreStylesSection text={label} />
+    </li>
   );
 };
 export const GeneratedCaptions = () => {
   const captions = useSelector((state) => state.generatedCaptions);
   return captions.length !== 0 ? (
-    <RadioGroup
-      id="generated-captions"
-      defaultValue="option-one"
-      className="p-4 bg-slate-50 rounded-md max-h-80 border-2 border-black overflow-scroll"
-    >
-      {captions.map((data, index) => {
-        return (
-          <GeneratedCaption index={index} label={data.caption} key={index} />
-        );
-      })}
-    </RadioGroup>
+    <>
+      <div
+        id="generated-captions"
+        defaultValue="option-one"
+        className="p-4 bg-white rounded-md max-h-100 border-2 border-black overflow-scroll font-sans"
+      >
+        {captions.map((data, index) => {
+          return (
+            <GeneratedCaption index={index} label={data.caption} key={index} />
+          );
+        })}
+      </div>
+    </>
   ) : (
     <></>
   );

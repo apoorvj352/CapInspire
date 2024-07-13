@@ -1,3 +1,4 @@
+import AboutUs from "@/components/AboutUs/about";
 import CaptionCarousel from "@/components/carousel/captionCarousel";
 import Footer from "@/components/shared/NavBar/Footer";
 import { Button } from "@/components/ui/button";
@@ -103,6 +104,7 @@ const Home = () => {
       </div>
       <MetricSection />
       <CaptionCarousel />
+      <AboutUs />
       <Footer />
     </div>
   );
