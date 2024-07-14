@@ -27,8 +27,6 @@ export default function MicrophoneComponent() {
   const final_transcript = useRef("");
   const [isSupported, setIsSupported] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const router = useRouter();
-  const dispatch = useDispatch();
 
   // Reference to store the SpeechRecognition instance
   const recognitionRef = useRef<SpeechRecognition>(null);
@@ -133,27 +131,49 @@ export default function MicrophoneComponent() {
           }
         </Button>
       )}
-      <div className="flex flex-wrap gap-6 items-center">
-        <MoodList />
-        <Language />
-      </div>
-      <Button
-        className="w-full"
-        onClick={() => {
-          fetchCaptions(
-            "I went to beach with my friends",
-            "refreshing",
-            "english",
-          ).then((data) => {
-            const jsonResult = JSON.parse(data.content);
-            dispatch(setGeneratedCaptions(jsonResult.captions));
-            router.push("/captionize#generated-captions");
-            console.log(jsonResult);
-          });
-        }}
-      >
-        Generate Captions
-      </Button>
+      <PreferenceList />
+      <GenerateCaptionsButton />
     </div>
   );
 }
+
+export const PreferenceList = () => {
+  return (
+    <div className="flex flex-wrap gap-6 items-center">
+      <MoodList />
+      <Language />
+
+      <label className="inline-flex items-center cursor-pointer">
+        <input type="checkbox" value="" className="sr-only peer" />
+        <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none border-black rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+        <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+          Include Hashtags
+        </span>
+      </label>
+    </div>
+  );
+};
+
+export const GenerateCaptionsButton = () => {
+  const router = useRouter();
+  const dispatch = useDispatch();
+  return (
+    <Button
+      className="w-full"
+      onClick={() => {
+        fetchCaptions(
+          "I went to beach with my friends",
+          "refreshing",
+          "english",
+        ).then((data) => {
+          const jsonResult = JSON.parse(data.content);
+          dispatch(setGeneratedCaptions(jsonResult.captions));
+          router.push("/captionize#generated-captions");
+          console.log(jsonResult);
+        });
+      }}
+    >
+      Generate Captions
+    </Button>
+  );
+};

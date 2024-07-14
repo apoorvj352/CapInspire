@@ -3,12 +3,10 @@ import { Button } from "../ui/button";
 
 export const PreferenceButton = ({
   value,
-  emoji,
   onClick,
   selected,
 }: {
   value: string;
-  emoji?: number;
   onClick: (value: string) => void;
   selected: boolean;
 }) => {
@@ -17,7 +15,6 @@ export const PreferenceButton = ({
     onClick(value);
   };
 
-  const emojiChar = emoji && String.fromCodePoint(emoji);
   return (
     <Button
       variant={"outline"}
@@ -27,7 +24,6 @@ export const PreferenceButton = ({
       onClick={handleClick}
     >
       {value}
-      <span>{emojiChar}</span>
     </Button>
   );
 };

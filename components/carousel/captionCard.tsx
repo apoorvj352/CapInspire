@@ -3,13 +3,7 @@
 import { useState } from "react";
 import { CardBody, CardContainer, CardItem } from "../ui/3d-card";
 
-export function CaptionCard({
-  value,
-  selected,
-}: {
-  value: string;
-  selected: boolean;
-}) {
+export function CaptionCard({ selected }: { selected: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const togglePopover = () => {
