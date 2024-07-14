@@ -1,5 +1,4 @@
 import PreferenceButton from "@/components/Preferences/PreferenceButtons";
-import { Mountain } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,9 +12,9 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 
-import { useDispatch, useSelector } from "react-redux";
-import React, { useEffect, useState } from "react";
 import { setSelectedLanguages } from "@/Store/actionSelectPreference";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 export const Language = () => {
   const [mounted, setMounted] = React.useState(false);
   const selectedOptions = useSelector((state) => state.selectedLanguages);
@@ -24,7 +23,7 @@ export const Language = () => {
   const handleLanguageSelect = (preferredLanguage: string) => {
     if (languageChosen.includes(preferredLanguage)) {
       setLocalSelectedLanguage(
-        languageChosen.filter((lang) => lang !== preferredLanguage)
+        languageChosen.filter((lang) => lang !== preferredLanguage),
       );
     } else {
       setLocalSelectedLanguage([...languageChosen, preferredLanguage]);
@@ -88,8 +87,9 @@ export const Language = () => {
           </AlertDialogTitle>
           <AlertDialogDescription>
             <div className="flex flex-wrap gap-4 justify-center">
-              {languageList.map((language, index) => (
+              {languageList.map((language) => (
                 <PreferenceButton
+                  key={language}
                   value={language}
                   onClick={handleLanguageSelect}
                   selected={languageChosen.includes(language)}

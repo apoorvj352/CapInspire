@@ -1,4 +1,4 @@
-const { OpenAIClient, AzureKeyCredential } = require("@azure/openai");
+import { AzureKeyCredential, OpenAIClient } from "@azure/openai";
 
 const END_POINT = "https://insta-caption-generator-service.openai.azure.com/";
 const API_KEY = "6754a684befa4eac908b26af134b0c69";
@@ -7,7 +7,7 @@ const deploymentId = "InstaCaptionGPT";
 export async function fetchCaptions(
   description: string,
   mood: string,
-  language: string
+  language: string,
 ) {
   const input = {
     description,

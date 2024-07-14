@@ -1,5 +1,4 @@
 import PreferenceButton from "@/components/Preferences/PreferenceButtons";
-import { Mountain } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -46,7 +45,7 @@ export const MoodList = () => {
   const handleSelectedMoodOptions = (moodValue: string) => {
     if (localSelectedMoodOptions?.includes(moodValue)) {
       setLocalSelectedMoodOptions(
-        localSelectedMoodOptions.filter((item) => item !== moodValue)
+        localSelectedMoodOptions.filter((item) => item !== moodValue),
       );
     } else {
       setLocalSelectedMoodOptions([...localSelectedMoodOptions, moodValue]);

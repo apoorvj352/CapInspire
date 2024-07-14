@@ -7,15 +7,15 @@ import { useRouter } from "next/navigation";
 // Import necessary modules and components
 import { setGeneratedCaptions } from "@/Store/actionSelectPreference";
 import { fetchCaptions } from "@/utils/captionGenerator";
+import { SpeechRecognition } from "dom-speech-recognition";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import Language from "./Language";
 import { MoodList } from "./MoodList";
-
-// Declare a global interface to add the webkitSpeechRecognition property to the Window object
 declare global {
   interface Window {
-    webkitSpeechRecognition: any;
+    webkitSpeechRecognition: SpeechRecognition;
+    SpeechRecognition: SpeechRecognition;
   }
 }
 
@@ -23,7 +23,6 @@ declare global {
 export default function MicrophoneComponent() {
   // State variables to manage recording status, completion, and transcript
   const [isRecording, setIsRecording] = useState(false);
-  const [recordingComplete, setRecordingComplete] = useState(false);
   const [currentTranscript, setTranscript] = useState("");
   const final_transcript = useRef("");
   const [isSupported, setIsSupported] = useState(false);
@@ -32,7 +31,7 @@ export default function MicrophoneComponent() {
   const dispatch = useDispatch();
 
   // Reference to store the SpeechRecognition instance
-  const recognitionRef = useRef<any>(null);
+  const recognitionRef = useRef<SpeechRecognition>(null);
 
   // Function to start recording
   const startRecording = () => {
@@ -46,6 +45,7 @@ export default function MicrophoneComponent() {
       recognitionRef.current.interimResults = true;
 
       // Event handler for speech recognition results
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       recognitionRef.current.onresult = (event: any) => {
         let interimResults = "";
         for (let i = event.resultIndex; i < event.results.length; ++i) {
@@ -87,7 +87,6 @@ export default function MicrophoneComponent() {
     if (recognitionRef.current) {
       // Stop the speech recognition and mark recording as complete
       recognitionRef.current.stop();
-      setRecordingComplete(true);
     }
   };
 
@@ -144,7 +143,7 @@ export default function MicrophoneComponent() {
           fetchCaptions(
             "I went to beach with my friends",
             "refreshing",
-            "english"
+            "english",
           ).then((data) => {
             const jsonResult = JSON.parse(data.content);
             dispatch(setGeneratedCaptions(jsonResult.captions));
