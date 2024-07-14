@@ -20,7 +20,9 @@ import {
 } from "@/components/ui/carousel";
 import React from "react";
 import CaptionList from "./CaptionList";
-import { CaptionCard } from "./captionCard";
+import { CaptionCard } from "./CaptionCard";
+import { ListDialog } from "../Dialog/ListDialog";
+import { Caption_Strings } from "@/constants/strings";
 
 export const PopoverCaptions = ({
   value,
@@ -38,40 +40,14 @@ export const PopoverCaptions = ({
   if (!mounted) {
     return null;
   }
-  return (
-    <AlertDialog>
-      <AlertDialogTrigger>
-        <CaptionCard value={value} selected={selected} />
-      </AlertDialogTrigger>
-      <AlertDialogContent className="min-w-[40%] md:w-full">
-        <AlertDialogHeader className="flex justify-between items-center min-w-[40%]">
-          <AlertDialogTitle className="relative w-full flex justify-between items-center text-3xl font-sans">
-            <span>Trending Captions</span>
-            <AlertDialogCancel asChild className="border-none">
-              <button className="p-2">
-                <svg
-                  className="w-5 h-5 text-black dark:text-gray-300"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <line x1="18" y1="6" x2="6" y2="18" />
-                  <line x1="6" y1="6" x2="18" y2="18" />
-                </svg>
-              </button>
-            </AlertDialogCancel>
-          </AlertDialogTitle>
-        </AlertDialogHeader>
-        <AlertDialogDescription className="w-full">
-          <CaptionList />
-        </AlertDialogDescription>
-      </AlertDialogContent>
-    </AlertDialog>
-  );
+  const moodListDialogProps = {
+    label: Caption_Strings.Label,
+    title: Caption_Strings.Title,
+    dialogDescriptionComponent: CaptionList,
+    dialogTriggerComponent: CaptionCard,
+    dialogTriggerComponentProps: selected,
+  };
+  return <ListDialog {...moodListDialogProps} />;
 };
 
 export const CaptionCarousel = () => {

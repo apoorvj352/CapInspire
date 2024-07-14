@@ -1,21 +1,11 @@
+import { trendingCaptions } from "@/constants/list";
+import { copyToClipboard } from "@/utils/CopyText";
 import React from "react";
 
 const CaptionList = () => {
-  const captions = [
-    "𝐼 𝑔𝑜 𝓉𝑜 𝓈𝑒𝑒𝓀 𝒶 𝑔𝓇𝑒𝒶𝓉 𝓅𝑒𝓇𝒽𝒶𝓅𝓈.🏔️✨ #MountainViews #AdventureAwaits #NatureLovers",
-    "ᴛʜᴇ ᴍᴏᴜɴᴛᴀɪɴs ᴀʀᴇ ᴄᴀʟʟɪɴɢ, ᴀɴᴅ ɪ ᴍᴜsᴛ ɢᴏ. 🌄📞 #Mountains #Wanderlust #GetOutside",
-    "𝐀𝐝𝐯𝐞𝐧𝐭𝐮𝐫𝐞 𝐚𝐰𝐚𝐢𝐭𝐬 𝐚𝐭 𝐞𝐯𝐞𝐫𝐲 𝐩𝐞𝐚𝐤. 🏞️🚶‍♂️ #ExploreMore #HikingAdventures #TravelDiaries",
-    "𝕋𝕒𝕜𝕖 𝕞𝕖 𝕥𝕠 𝕥𝕙𝕖 𝕞𝕠𝕦𝕟𝕥𝕒𝕚𝕟𝕤. 🏕️🗻 #MountainLife #NatureTherapy #FindYourPeak",
-    "𝓦𝓱𝓮𝓻𝓮 𝓽𝓱𝓮 𝓮𝓪𝓻𝓽𝓱 𝓶𝓮𝓮𝓽𝓼 𝓽𝓱𝓮 𝓼𝓴𝔂. ⛰️☁️ #ScenicViews #NatureAtItsBest #SkyHigh",
-  ];
-
-  const copyToClipboard = (text) => {
-    navigator.clipboard.writeText(text);
-    alert("Copied to clipboard");
-  };
-
+  const captions = trendingCaptions;
   return (
-    <div className="mt-2 px-4 sm:px-6 lg:px-8">
+    <div className="mt-2 w-full">
       <ul className="space-y-4">
         {captions.map((caption, index) => {
           const text = caption.replace(/#\w+/g, "").trim();
